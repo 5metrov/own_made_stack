@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 using namespace std;
 
 class Node {
@@ -21,12 +21,16 @@ public:
     void push_up(int data) { //создание функций для работы с однонаправленной очереди
         Node* tmp_node = new Node(data);
         if (up != NULL) { 
-            tmp_node = up->next;
+            tmp_node->prev = up;
+            up = tmp_node;
+        }
+        else {
+            up = tmp_node;
         }
         if (down == NULL) {
             down = tmp_node;
         }
-        up = tmp_node;
+        
     }
 
     void pop_up() {
@@ -48,12 +52,17 @@ public:
     void show_all() {
         Node* tmp_node = up;
         int flag = 0;
-        while (tmp_node != NULL) {
-            cout << tmp_node->data << ' ';
-            tmp_node = tmp_node->prev;
-            flag++;
+        while (true) {
+            if (tmp_node != NULL) {
+                cout << tmp_node->data << ' ';
+                tmp_node = tmp_node->prev;
+                flag++;
+            }
+            else { 
+                cout << endl << "Колличество элементов в стэке: " << flag << endl; 
+                break; 
+            }
         }
-        cout << "Количество элементов в стэке: " << flag << endl;
     }
 };
 
